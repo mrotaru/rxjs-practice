@@ -1,5 +1,5 @@
 const { Observable, of } = require("rxjs");
-const { map } = require("rxjs/operators");
+const { map, filter, tap } = require("rxjs/operators");
 
 // An operator is a higher-order function. The returned function
 // takes an observable as a param, and returns an observable.
@@ -53,4 +53,15 @@ const log = () => $src => {
 of(1, 2, 'foo', 3).pipe(
     add(100),
     log(),
+).subscribe()
+
+// the custom `add` operator can be build as a combination of built-in
+// operators - `filter`, `map` and `tap`
+const add2 = toAdd => $src => $src.pipe(
+    filter(value => !Number.isNaN(parseFloat(value))),
+    map(value => value + toAdd),
+    tap(value => console.info(value)),
+)
+of(1, 2, 'foo', 3).pipe(
+    add2(100),
 ).subscribe()
