@@ -1,4 +1,4 @@
-const { Observable, of } = require("rxjs");
+const { Observable, of, Subject } = require("rxjs");
 const { map, filter, tap, take } = require("rxjs/operators");
 
 let source$
@@ -31,3 +31,9 @@ source$ = new Observable(subscriber => {
 })
 source$.subscribe(v => console.log('subscriber 1', v))
 source$.subscribe(v => console.log('subscriber 2', v))
+
+// And now, with Subjects...
+let subject$ = new Subject()
+subject$.subscribe(v => console.log('subscriber 1', v))
+subject$.subscribe(v => console.log('subscriber 2', v))
+subject$.next(getRandomInt(1000))
