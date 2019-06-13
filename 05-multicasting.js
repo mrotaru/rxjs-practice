@@ -32,8 +32,22 @@ source$ = new Observable(subscriber => {
 source$.subscribe(v => console.log('subscriber 1', v))
 source$.subscribe(v => console.log('subscriber 2', v))
 
-// And now, with Subjects...
-let subject$ = new Subject()
+// And now, with Subjects... Note how all three subscribers
+// get the same value
+let subject$
+
+subject$ = new Subject()
 subject$.subscribe(v => console.log('subscriber 1', v))
 subject$.subscribe(v => console.log('subscriber 2', v))
+subject$.subscribe(v => console.log('subscriber 3', v))
 subject$.next(getRandomInt(1000))
+
+// Now, let's use a subject as a proxy. So, one observable produces some values.
+// We know subjects can also be observers; which means they can subscribe. The
+// subject subscribes to some observable, and emits the values on to multiple
+// observers. He subscribb, but he also emitt !
+console.log('\nSubjects can proxy:')
+subject$ = new Subject()
+subject$.subscribe(v => console.log('proxy subscriber 1', v))
+subject$.subscribe(v => console.log('proxy subscriber 2', v))
+source$.subscribe(subject$)
