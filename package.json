@@ -11,5 +11,8 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "rxjs": "^6.5.2"
+  },
+  "devDependencies": {
+    "deep-equal": "^1.0.1"
   }
 }
